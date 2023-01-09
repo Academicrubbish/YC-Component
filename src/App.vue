@@ -1,18 +1,15 @@
 <template>
   <div id="app">
-    <!-- <main-interface></main-interface> -->
     <index></index>
   </div>
 </template>
 
 <script>
-import mainInterface from './view/mainInterface'
 import index from "./view/index.vue";
 
 export default {
   name: 'App',
   components: {
-    mainInterface,
     index
   }
 }
@@ -22,7 +19,8 @@ export default {
 html,
 body,
 #app {
-  height: 100%;
+  height: 100vh;
+  width: 100%;
   margin: 0 !important;
   padding: 0 !important;
 }

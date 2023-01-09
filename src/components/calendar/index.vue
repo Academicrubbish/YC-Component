@@ -196,6 +196,7 @@ export default {
   padding: 15px;
   box-sizing: border-box;
   background-color: white;
+  border: 1px solid gray;
   border-radius: 10px;
   font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
 }
@@ -210,9 +211,8 @@ export default {
 
 .calendar-head .head-left {
   text-align: left;
-  /* margin-left: 7px;
   font-size: 18px;
-  font-weight: 600; */
+  font-weight: 600;
 }
 
 .calendar-head .head-right {

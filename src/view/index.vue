@@ -29,6 +29,12 @@
         <el-collapse-item title="动态引入组件" name="9">
           <dynamic-comp></dynamic-comp>
         </el-collapse-item>
+        <el-collapse-item title="左右分栏" name="10">
+          <column></column>
+        </el-collapse-item>
+        <el-collapse-item title="登录验证码实现" name="11">
+          <identify-code></identify-code>
+        </el-collapse-item>
       </el-collapse>
     </div>
   </div>
@@ -44,6 +50,9 @@ import navBar from "../components/navBar/index";
 import rightMenu from "../components/rightMenu/index";
 import formValidate from "../components/formValidate/index";
 import dynamicComp from "../components/dynamicComp/index";
+import column from "../components/column/index";
+import identifyCode from "../components/identifyCode/index";
+
 
 export default {
   components: {
@@ -55,7 +64,9 @@ export default {
     navBar,
     rightMenu,
     formValidate,
-    dynamicComp
+    dynamicComp,
+    column,
+    identifyCode
   },
   data() {
     return {
@@ -69,15 +80,17 @@ export default {
 .main {
   width: 100%;
   height: 100%;
-  padding: 20px;
+  padding-top: 70px;
+  box-sizing: border-box;
   background-color: #f4f6f9;
 }
 
 .main_body {
   width: 80%;
+  height: 90%;
   margin-left: 10%;
-  height: 800px;
   padding: 20px;
+  box-sizing: border-box;
   overflow: auto;
   background-color: white;
   box-shadow: 10px 10px 5px 0 rgb(232, 237, 250);
