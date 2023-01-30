@@ -35,6 +35,9 @@
         <el-collapse-item title="登录验证码实现" name="11">
           <identify-code></identify-code>
         </el-collapse-item>
+        <el-collapse-item title="地区选择器" name="12">
+          <area-select></area-select>
+        </el-collapse-item>
       </el-collapse>
     </div>
   </div>
@@ -52,6 +55,8 @@ import formValidate from "../components/formValidate/index";
 import dynamicComp from "../components/dynamicComp/index";
 import column from "../components/column/index";
 import identifyCode from "../components/identifyCode/index";
+import areaSelect from "../components/areaSelect/index";
+
 
 
 export default {
@@ -66,7 +71,8 @@ export default {
     formValidate,
     dynamicComp,
     column,
-    identifyCode
+    identifyCode,
+    areaSelect
   },
   data() {
     return {
