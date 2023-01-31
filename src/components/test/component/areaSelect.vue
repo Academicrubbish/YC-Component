@@ -1,18 +1,20 @@
 <template>
-  <div>
-    <el-select v-model="province" placeholder="请选择省" @change="selectProvince">
-      <el-option v-for="item in provinceList" :key="item.code" :label="item.value" :value="item">
-      </el-option>
-    </el-select>
-    <el-select v-model="city" placeholder="请选择市" @change="selectCity">
-      <el-option v-for="item in cityList" :key="item.code" :label="item.value" :value="item">
-      </el-option>
-    </el-select>
-    <el-select v-model="districts" placeholder="请选择区" @change="selectDistricts">
-      <el-option v-for="item in districtsList" :key="item.code" :label="item.value" :value="item">
-      </el-option>
-    </el-select>
-    <el-button @click="submit">确定</el-button>
+  <div class="area_select">
+    <span>
+      <el-select size="mini" v-model="province" placeholder="请选择省" @change="selectProvince">
+        <el-option v-for="item in provinceList" :key="item.code" :label="item.value" :value="item">
+        </el-option>
+      </el-select>
+      <el-select size="mini" v-model="city" placeholder="请选择市" @change="selectCity">
+        <el-option v-for="item in cityList" :key="item.code" :label="item.value" :value="item">
+        </el-option>
+      </el-select>
+      <el-select size="mini" v-model="districts" placeholder="请选择区" @change="selectDistricts">
+        <el-option v-for="item in districtsList" :key="item.code" :label="item.value" :value="item">
+        </el-option>
+      </el-select>
+      <el-button size="mini" @click="submit">确定</el-button>
+    </span>
   </div>
 </template>
 
@@ -93,7 +95,7 @@ export default {
       this.geoLo.abcode = obj.code
     },
     submit() {
-      console.log(this.geoLo);
+      this.$emit('areaClick', this.geoLo);
     },
     obj2arr(obj) {
       let arr = [];
@@ -110,5 +112,20 @@ export default {
 </script>
 
 <style scoped>
+.area_select {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
 
+.area_select>span {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.el-button {
+  width: 193px;
+}
 </style>

@@ -1,5 +1,6 @@
 <template>
   <div class="test">
+    <!-- <area-select @areaClick="areaClick"></area-select> -->
     <div class="header">
       <i class="el-icon-location-information"></i>
       {{ location }}
@@ -42,22 +43,25 @@
       </div>
     </div>
     <div class="pop-up" v-if="status">
-      <div style="margin: auto;">
+      <area-select @areaClick="areaClick"></area-select>
+      <!-- <div style="margin: auto;">
         <v-distpicker :province="listData.adm1" :city="listData.adm2" :area="listData.location"
           @province="onChangeProvince" @city="onChangeCity" @area="onChangeArea">
         </v-distpicker>
         <el-button @click="chooseLo">确定</el-button>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
 
 <script>
+import areaSelect from "./component/areaSelect.vue";
 import VDistpicker from "v-distpicker";
-import { getLocation, getWeather, getWill, getAir, getNowAir, getMinutely } from "../../network/weather";
+import { getAdm, getLocation, getWeather, getWill, getAir, getNowAir, getMinutely } from "../../network/weather";
 export default {
   components: {
-    VDistpicker
+    VDistpicker,
+    areaSelect
   },
   data() {
     return {
@@ -66,8 +70,10 @@ export default {
       listData: {
         adm1: '北京市',
         adm2: '北京市',
-        location: '东城区'  //这个参数名后端返回的和插件定义的不一样
+        location: '东城区',  //这个参数名后端返回的和插件定义的不一样
+        abcode: '110101'
       },
+
       getLo: {},
       now: {
         icon: 100
@@ -83,58 +89,86 @@ export default {
 
   },
   methods: {
-    onChangeProvince(data) {
-      this.listData.adm1 = data.value;
-    },
-    onChangeCity(data) {
-      this.listData.adm2 = data.value;
-    },
-    onChangeArea(data) {
-      this.listData.location = data.value;
+    areaClick(geoLo) {
+      this.listData = geoLo
+      this.chooseLo();
     },
     chooseLo() {
       this.location = this.listData.location
-
-      //根据用户选择的地区拿到经度纬度和地区编号
-      getLocation(this.listData).then(res => {
-        this.getLo = {
-          lat: res.data.location[0].lat,
-          lon: res.data.location[0].lon,
-          id: res.data.location[0].id
+      //先根据中国行政编码abcode查询
+      getLocation(this.listData.abcode).then(res => {
+        //如果使用中国行政编码查询不到 就采用地区查询
+        if (res.data.location == null) {
+          getAdm({ adm1: this.listData.adm1, adm2: this.listData.adm2, location: this.listData.location }).then(res => {
+            // 如果地区查询也查不到 就报错
+            if (res.data.location == null) {
+              this.$message('暂无此地区信息');
+            } else {
+              this.saveLo(res)
+            }
+          })
         }
-        //将地址信息缓存在浏览器
-        let str = JSON.stringify({
-          location: this.listData.location,
-          getLo: this.getLo,
-          listData: this.listData
-        })
-        localStorage.setItem('location', str);
-        this.requestData();
-      }).catch(err => {
-        console.log(err);
+        else {
+          this.saveLo(res)
+        }
       })
       this.status = false
+    },
+    saveLo(res) {
+      this.getLo = {
+        lat: res.data.location[0].lat,
+        lon: res.data.location[0].lon,
+        id: res.data.location[0].id
+      }
+      //将地址信息缓存在浏览器
+      let str = JSON.stringify({
+        location: this.listData.location,
+        getLo: this.getLo,
+        listData: this.listData
+      })
+      localStorage.setItem('location', str);
+      this.requestData();
     },
     requestData() {
       //实时天气
       getWeather(this.getLo.id).then(res => {
-        this.now = res.data.now;
+        if (res.data.code != '200') {
+          this.$message('暂无此地区实时天气信息');
+        } else {
+          this.now = res.data.now;
+        }
       })
       //未来三天天气
       getWill(this.getLo.id).then(res => {
-        this.will = res.data.daily;
+        if (res.data.code != '200') {
+          this.$message('暂无此地区未来3天天气信息');
+        } else {
+          this.will = res.data.daily;
+        }
       })
       //未来5天天气质量
       getAir(this.getLo.id).then(res => {
-        this.air = res.data.daily
+        if (res.data.code != '200') {
+          this.$message('暂无此地区未来3天天气质量信息');
+        } else {
+          this.air = res.data.daily
+        }
       })
       //当前实时天气质量
       getNowAir(this.getLo.id).then(res => {
-        this.nowAir = res.data.now
+        if (res.data.code != '200') {
+          this.$message('暂无此地区实时天气质量信息');
+        } else {
+          this.nowAir = res.data.now
+        }
       })
       //分钟级降水
       getMinutely(this.getLo.lon + ',' + this.getLo.lat).then(res => {
-        this.summary = res.data.summary;
+        if (res.data.code != '200') {
+          this.$message('暂无此地区分钟级降水信息');
+        } else {
+          this.summary = res.data.summary;
+        }
       })
     },
     getData() {
@@ -251,14 +285,6 @@ export default {
   height: 15px;
 }
 
-::v-deep .distpicker-address-wrapper select,
-.pop-up .el-button {
-  display: block;
-  width: 200px;
-  height: 30px;
-  padding: 0;
-}
-
 .pop-up {
   width: 100%;
   height: 100%;
@@ -266,6 +292,6 @@ export default {
   top: 0;
   left: 0;
   background-color: rgb(0 0 0 / 50%);
-  display: flex;
+  border-radius: 10px;
 }
 </style>

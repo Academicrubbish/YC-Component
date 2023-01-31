@@ -10,11 +10,18 @@ export function getNowWeather(location) {
   });
 }
 
-export function getLocation(data) {
+export function getAdm(data) {
   return axios({
     url: "https://geoapi.qweather.com/v2/city/lookup?key=5b81005e51744ced8ec0525d17ed39d4",
     method: "GET",
     params: data,
+  });
+}
+
+export function getLocation(data) {
+  return axios({
+    url: `https://geoapi.qweather.com/v2/city/lookup?key=5b81005e51744ced8ec0525d17ed39d4&location=${data}`,
+    method: "GET",
   });
 }
 
