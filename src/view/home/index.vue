@@ -47,18 +47,18 @@
 </template>
 
 <script>
-import calendar from '../components/calendar/index'
-import editableTable from '../components/editableTable/index'
-import wUploadBtn from '../components/w-uploadBtn/index'
-import weather from "../components/weather/index";
-import test from "../components/test/index";
-import navBar from "../components/navBar/index";
-import rightMenu from "../components/rightMenu/index";
-import formValidate from "../components/formValidate/index";
-import dynamicComp from "../components/dynamicComp/index";
-import column from "../components/column/index";
-import identifyCode from "../components/identifyCode/index";
-import areaSelect from "../components/areaSelect/index";
+import calendar from '@/components/calendar/index'
+import editableTable from '@/components/editableTable/index'
+import wUploadBtn from '@/components/w-uploadBtn/index'
+import weather from "@/components/weather/index";
+import test from "@/components/test/index";
+import navBar from "@/components/navBar/index";
+import rightMenu from "@/components/rightMenu/index";
+import formValidate from "@/components/formValidate/index";
+import dynamicComp from "@/components/dynamicComp/index";
+import column from "@/components/column/index";
+import identifyCode from "@/components/identifyCode/index";
+import areaSelect from "@/components/areaSelect/index";
 import vueAwesomeSwiper from "@/components/vue-awesome-swiper/index";
 
 
