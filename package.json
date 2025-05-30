@@ -15,7 +15,8 @@
     "qweather-icons": "^1.1.1",
     "splitpanes": "^2.4.1",
     "v-distpicker": "^1.3.3",
-    "vue": "^2.6.14"
+    "vue": "^2.6.14",
+    "vue-awesome-swiper": "^3.1.3"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^5.0.0",

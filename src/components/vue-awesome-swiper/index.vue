@@ -23,7 +23,7 @@
 
 <script>
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
-import 'swiper/css/swiper.css'
+import 'swiper/dist/css/swiper.css'
 export default {
   name: 'swiper-example-zoom',
   title: 'Zoom',

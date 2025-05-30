@@ -8,7 +8,7 @@ import "qweather-icons/font/qweather-icons.css";
 
 //vue-awesome-swiper轮播图组件
 import VueAwesomeSwiper from "vue-awesome-swiper";
-import "swiper/css/swiper.css";
+import "swiper/dist/css/swiper.css";
 
 Vue.use(VueAwesomeSwiper /* { 全局组件的默认选项 } */);
 
